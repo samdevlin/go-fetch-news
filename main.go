@@ -47,12 +47,14 @@ func main() {
 		defer resp.Body.Close()
 		data, err := io.ReadAll(resp.Body)
 		if err != nil {
-			panic(err)
+			fmt.Printf("An error occurred reading the source's body:\n%s", err)
+			continue
 		}
 
 		var urlset Urlset
 		if err := xml.Unmarshal(data, &urlset); err != nil {
-			panic(err)
+			fmt.Printf("An error occurred unmarshalling the XML response:\n%s", err)
+			continue
 		}
 
 		// TODO: emit an event
@@ -80,8 +82,11 @@ func loadCSV(filename string) ([]source, error) {
 	var res []source
 
 	for _, value := range records {
-		// TODO: handle out of range
-		res = append(res, source{value[0], value[1]})
+		if len(value) == 2 {
+			res = append(res, source{value[0], value[1]})
+		} else {
+			fmt.Println("Encountered a malformed CSV entry. Skipping..")
+		}
 	}
 
 	return res, nil
