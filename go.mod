@@ -1,3 +1,3 @@
-module github.com/samdevlin/go-fetch-news.git
+module github.com/samdevlin/go-fetch-news
 
 go 1.24.3
