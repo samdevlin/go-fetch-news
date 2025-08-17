@@ -21,12 +21,12 @@ type Urlset struct {
 
 type Url struct {
 	Loc  string `xml:"loc"`
-	News News   `xml:"news:news"`
+	News News   `xml:"news"`
 }
 
 type News struct {
-	Title    string `xml:"news:title"`
-	Keywords string `xml:"news:keywords"`
+	Title    string `xml:"title"`
+	Keywords string `xml:"keywords"`
 }
 
 func main() {
@@ -56,8 +56,10 @@ func main() {
 		}
 
 		// TODO: emit an event
-		for _, item := range urlset.Url {
-			fmt.Printf("%s ==> %s\n", item.News.Title, item.Loc)
+		for _, u := range urlset.Url {
+			fmt.Println("Loc:", u.Loc)
+			fmt.Println("Title:", u.News.Title)
+			fmt.Println("Keywords:", u.News.Keywords)
 		}
 	}
 }
